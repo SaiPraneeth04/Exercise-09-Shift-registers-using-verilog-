@@ -46,34 +46,77 @@ A Parallel in Parallel out (PIPO) shift register is used as a temporary storage 
 
 
 ### PROGRAM 
-/*
+```python
 Program for  Implementation-of Shift-registers-using-verilog-
 Developed by: 
 RegisterNumber:  
-*/
+```
+####  i) PISO:
+```python
+module piso(Clk, Parallel_In,load, Serial_Out);
+input Clk,load;
+input [3:0]Parallel_In;
+output reg Serial_Out;
+reg [3:0]tmp;
+always @(posedge Clk)
+begin
+if(load)
+tmp<=Parallel_In;
+else
+begin
+Serial_Out<=tmp[3];
+tmp<={tmp[2:0],1'b0};
+end
+end
+endmodule
+```
 
-
-
-
+#### ii) PIPO:
+```python
+module pipo(PI,Clk,PO);
+input Clk;
+input [3:0] PI;
+output reg [3:0] PO;
+always @ (posedge Clk)
+begin
+PO=PI;
+end 
+endmodule 
+```
+#### iii) SIPO:
+```python
+module sipo(SI,Clk,Po);
+input SI,Clk;
+output [0:7]  Po;
+reg [0:7]temp;
+always @ (posedge Clk)
+begin
+temp={temp[0:6],SI};
+end
+assign Po=temp;
+endmodule 
+```
 
 
 ### RTL LOGIC  REGISTERS   
 
-
-
-
-
-
-
+####  i) PISO:
+![MODEL](/piso.png)
+#### ii) PIPO:
+![MODEL](/pipo.png)
+#### iii) SIPO:
+![MODEL](/sipo.png)
 
 
 ### TIMING DIGRAMS FOR SHIFT REGISTERS
 
-
-
-
-
-
+####  i) PISO:
+![MODEL](/piso1.png)
+#### ii) PIPO:
+![MODEL](/pipo1.png)
+#### iii) SIPO:
+![MODEL](/sipo1.png)
 
 
 ### RESULTS 
+PISO , PIPO,PISO has been implemented using verilog and validated their functionality using their functional tables.
